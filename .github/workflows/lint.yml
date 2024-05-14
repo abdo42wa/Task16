@@ -1,4 +1,4 @@
-name: Python Linting
+name: Python CI
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,9 +19,13 @@ jobs:
         python-version: 3.x
 
     - name: Install dependencies
-      run: pip install flake8 
-    
-    - name: Lint Python code
       run: |
-        # Run linting command
-        flake8 .
+        pip install flake8
+        pip install pytest
+        pip install -r requirements.txt
+
+    - name: Lint Python code
+      run: flake8 .
+
+    - name: Run unit tests
+      run: pytest
