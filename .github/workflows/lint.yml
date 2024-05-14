@@ -1,4 +1,4 @@
-name: Python CI
+name: Flask Pipeline
 
 on:
   push:
@@ -8,27 +8,27 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
-    - name: Install dependencies
-      run: |
-        pip install flake8
-        pip install pytest
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 pytest
 
-    - name: Lint Python code
-      run: flake8 .
+      - name: Lint Python code
+        run: flake8 .
 
-    - name: Run unit tests
-      run: pytest
-  
+      - name: Run unit tests
+        run: pytest
+
   build-and-deploy:
     runs-on: ubuntu-latest
 
