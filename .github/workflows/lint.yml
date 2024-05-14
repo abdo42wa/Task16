@@ -42,7 +42,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 --tag abdo42wa/flask-app:latest .
+          docker buildx build --platform linux/amd64,linux/arm64 --tag abdo42wa/test:latest .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -52,4 +52,4 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push abdo42wa/flask-app:latest
+          docker push abdo42wa/test:latest
