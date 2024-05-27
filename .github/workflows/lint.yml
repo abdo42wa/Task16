@@ -31,6 +31,7 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
+    needs: lint-and-test
 
     steps:
       - name: Checkout code
@@ -39,20 +40,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build Docker image
-        run: |
-          docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 --tag abdo42wa/test:latest .
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push Docker image to Docker Hub
-        user: docker/build-push-action@v2
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: abdo42wa/nextwebapp:latest, abdo42wa/nextwebapp:${{ github.run_number }}
+          platforms: linux/amd64,linux/arm64
