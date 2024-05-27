@@ -56,5 +56,3 @@ jobs:
           context: .
           push: true
           tags: abdo42wa/nextwebapp:latest, abdo42wa/nextwebapp:${{ github.run_number }}
-        run: |
-          docker push abdo42wa/test:latest
